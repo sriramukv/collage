@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        nav {
+            background-color: #555;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            display: inline-block;
+        }
+        
+        .banner {
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .banner img {
+            width: 100%;
+            height: auto;
+        }
+        
+        section {
+            padding: 2rem;
+            margin-top: -150px;
+        }
+        
+        @media only screen and (max-width: 600px) {
+            nav a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="position: fixed;width: 100%;">
+        <header>
+            <h1>Welcome to Pension-Pro Admin</h1>
+        </header>
+
+        <nav>
+            <a href="\Admin Module\AdminHomePage.html">Home</a>
+            <a href="\Admin Module\AdminUsersPage.html">Users</a>
+            <a href="\Admin Module\AdminPensionsPage.html">Pensions</a>
+            <a href="\Admin Module\AdminLoginPage.html">Login</a>
+        </nav>
+    </div>
+
+    <div class="banner">
+        <img src="C:/Users/MY PC/Downloads/Pension tracking project (2)/Pension tracking project/Images/adminDisplayImg.jpg" alt="Banner Image">
+    </div>
+
+    <section>
+        <h2>Main Content Area</h2>
+        <p>This is a placeholder for the main content of your admin home page. Customize as needed.</p>
+    </section>
+
+</body>
+
+</html>

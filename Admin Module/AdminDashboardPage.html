@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        nav {
+            background-color: #555;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            display: inline-block;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        
+        .chart {
+            width: 400px;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <div style="position: fixed;width: 100%;">
+            <header>
+                <h1>Welcome to Pension-Pro Admin</h1>
+            </header>
+
+            <nav>
+                <a href="\Admin Module\AdminHomePage.html">Home</a>
+                <a href="\Admin Module\AdminDashboardPage.html">Dashboard</a>
+                <a href="\Admin Module\AdminUsersPage.html">Users</a>
+                <a href="\Admin Module\AdminPensionsPage.html">Pensions</a>
+                <a href="\Admin Module\AdminLoginPage.html">Logout</a>
+            </nav>
+        </div><br><br><br><br><br><br><br><br>
+        <h1>Dashboard</h1>
+        <div class="chart-container">
+            <div class="chart">
+                <canvas id="barChart" width="400" height="200"></canvas>
+            </div>
+            <div class="chart">
+                <canvas id="lineChart" width="400" height="200"></canvas>
+            </div>
+        </div><br>
+        <div class="chart-container">
+            <div class="chart">
+                <canvas id="doughnutChart" width="400" height="200"></canvas>
+            </div>
+            <div class="chart">
+                <canvas id="radarChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div><br><br>
+
+    <script>
+        const dataForBarChart = {
+            labels: ['January', 'February', 'March', 'April', 'May'],
+            datasets: [{
+                label: 'Monthly Sales',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                data: [65, 59, 80, 81, 56],
+            }]
+        };
+
+        const dataForLineChart = {
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            datasets: [{
+                label: 'Daily Visits',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+                data: [30, 45, 20, 60, 10],
+                fill: false,
+            }]
+        };
+
+        const dataForDoughnutChart = {
+            labels: ['Category A', 'Category B', 'Category C'],
+            datasets: [{
+                data: [30, 40, 30],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+            }]
+        };
+
+        const dataForRadarChart = {
+            labels: ['Category A', 'Category B', 'Category C', 'Category D', 'Category E'],
+            datasets: [{
+                label: 'Performance',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+                data: [80, 60, 75, 45, 90],
+            }]
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            createBarChart('barChart', dataForBarChart);
+            createLineChart('lineChart', dataForLineChart);
+            createDoughnutChart('doughnutChart', dataForDoughnutChart);
+            createRadarChart('radarChart', dataForRadarChart);
+        });
+
+        function createBarChart(canvasId, chartData) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+            });
+        }
+
+        function createLineChart(canvasId, chartData) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+            });
+        }
+
+        function createDoughnutChart(canvasId, chartData) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: chartData,
+            });
+        }
+
+        function createRadarChart(canvasId, chartData) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: chartData,
+            });
+        }
+    </script>
+
+</body>
+
+</html>

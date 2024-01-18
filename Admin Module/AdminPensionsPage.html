@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        nav {
+            background-color: #555;
+            padding: 0.5rem;
+            text-align: center;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            display: inline-block;
+        }
+        
+        section {
+            padding: 4rem;
+            padding-top: 2rem;
+            text-align: center;
+            display: flex;
+            /* Added display flex */
+            justify-content: space-between;
+            /* Added justify-content space-between */
+            align-items: center;
+            /* Added align-items center */
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #555;
+            color: white;
+        }
+        
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        @media only screen and (max-width: 600px) {
+            nav a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+            section {
+                padding: 2rem;
+            }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%;
+        }
+        
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="position: fixed;width: 100%;">
+        <header>
+            <h1>Welcome to Pension-Pro Admin</h1>
+        </header>
+
+        <nav>
+            <a href="\Admin Module\AdminHomePage.html">Home</a>
+            <a href="\Admin Module\AdminDashboardPage.html">Dashboard</a>
+            <a href="\Admin Module\AdminUsersPage.html">Users</a>
+            <a href="\Admin Module\AdminPensionsPage.html">Pensions</a>
+            <a href="\Admin Module\AdminLoginPage.html">Logout</a>
+        </nav>
+    </div><br><br><br><br><br><br>
+
+    <section>
+        <div>
+            <div>
+                <h2>Available Users</h2>
+            </div>
+            <div>
+
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Recipient Name</th>
+                    <th>PAN number</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+
+
+    </section>
+    <div id="updatePensionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('updatePensionModal')">&times;</span>
+            <h2>Update Pension</h2>
+            <form id="updatePensionForm" onsubmit="updatePension(event)">
+                <!-- Input for Pension ID (hidden) -->
+                <input type="hidden" id="updatePensionId">
+
+                <!-- Input for New Amount -->
+                <label for="newAmount">New Amount:</label>
+                <input type="number" id="newAmount" placeholder="Enter new amount" required>
+
+                <!-- Submit Button -->
+                <button type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+    <div id="addPensionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addPensionModal')">&times;</span>
+            <h2>Add Pension</h2>
+            <form id="addPensionForm" onsubmit="addPension(event)">
+                <!-- Input for Recipient Name -->
+                <input type="hidden" id="addPensionId">
+
+                <!-- Input for Amount -->
+                <label for="pensionAmount">Amount:</label>
+                <input type="number" id="pensionAmount" placeholder="Enter amount" required>
+
+                <!-- Status (You can set a default value if needed) -->
+                <label for="status">Status:</label>
+                <select id="status" required>
+                <option value="Not yet deposited">Not yet deposited</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Pending">Pending</option>
+            </select>
+                <!-- Submit Button -->
+                <button type="submit">Add pension</button>
+            </form>
+        </div>
+    </div>
+    <div id="updateStatusModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('updateStatusModal')">&times;</span>
+            <h2>Update Pension</h2>
+            <form id="addPensionForm" onsubmit="updatePension(event)">
+                <!-- Input for Recipient Name -->
+                <input type="hidden" id="updatePensionId">
+
+                <!-- Status (You can set a default value if needed) -->
+                <label for="status">Status:</label>
+                <select id="status" required>
+                <option value="Not yet deposited">Not yet deposited</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Pending">Pending</option>
+            </select>
+                <!-- Submit Button -->
+                <button type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function fetchPensions() {
+            fetch('http://localhost:3000/people') // Replace with your backend API endpoint
+                .then(response => response.json())
+                .then(pensions => {
+                    const pensionTable = document.querySelector('table tbody');
+                    pensionTable.innerHTML = ''; // Clear existing rows
+
+                    pensions.forEach(pension => {
+                        const newRow = pensionTable.insertRow();
+                        newRow.innerHTML = `
+                    <td>${pension.name}</td>
+                    <td>${pension.panNumber}</td>
+                    <td>${pension.pensionAmount}</td>
+                    <td>${pension.status}</td>
+                    <td>
+                        <button onclick="openStatusPensionModal('${pension._id}')">Update Status</button>
+                        <button onclick="openAddPensionModal('${pension._id}')">Add Pension</button>
+                    </td>
+                `;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching pensions:', error);
+                });
+        }
+        // Function to add a new pension
+        function addPension(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get values from the form
+            const pensionId = document.getElementById('addPensionId').value;
+            const pensionAmount = document.getElementById('pensionAmount').value;
+            const status = document.getElementById('status').value;
+
+            // Send a POST request to create a new pension
+            fetch(`http://localhost:3000/people/${pensionId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        pensionAmount: pensionAmount,
+                        status: status,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Pension added successfully');
+                    fetchPensions();
+                    document.getElementById('addPensionForm').reset();
+                    // Clear form fields
+                    closeModal('addPensionModal'); // Close the Add Pension modal
+                    // You can refresh the pension list here if needed
+                })
+                .catch(error => {
+                    console.error('Error adding pension:', error);
+                });
+        }
+
+        // Function to update an existing pension
+        function updatePension(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get values from the form
+            const pensionId = document.getElementById('updatePensionId').value;
+            const status = document.getElementById('status').value;
+
+            // Send a PUT request to update the pension
+            fetch(`http://localhost:3000/people/${pensionId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        status
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Pension updated successfully');
+                    fetchPensions();
+                    document.getElementById('updatePensionForm').reset();
+                    closeModal('updateStatusModal'); // Close the Update Pension modal
+                    // You can refresh the pension list here if needed
+                })
+                .catch(error => {
+                    console.error('Error updating pension:', error);
+                });
+        }
+
+        function openAddPensionModal(pensionId) {
+            document.getElementById('addPensionId').value = pensionId; // Display user data
+            openModal('addPensionModal');
+        }
+
+        function openStatusPensionModal(pensionId) {
+            document.getElementById('updatePensionId').value = pensionId; // Display user data
+            openModal('updateStatusModal');
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Call the fetchPensions function to populate the table when the page loads
+        fetchPensions();
+    </script>
+
+</body>
+
+</html>

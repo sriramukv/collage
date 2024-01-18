@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Signup Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+    }
+    
+    .signup-form {
+        width: 50vw;
+        padding: 16px;
+        background-color: white;
+        margin: auto;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px 0px #000;
+    }
+    
+    input[type=text],
+    input[type=password],
+    input[type=email],
+    input[type=number] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+    }
+    
+    input[type=text]:focus,
+    input[type=password]:focus,
+    input[type=email]:focus,
+    input[type=number]:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+    
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+    }
+    
+    .registerbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+    
+    .registerbtn:hover {
+        opacity: 1;
+    }
+    
+    form {
+        padding: 16px;
+    }
+</style>
+
+<body>
+    <div class="signup-form">
+        <form id="signupForm">
+            <h2>Signup</h2>
+            <p>Please fill in this form to create an account!</p>
+            <hr>
+
+            <label for="name"><b>Name</b></label>
+            <input type="text" placeholder="Enter Name" name="name" required>
+
+            <label for="pan"><b>PAN Number</b></label>
+            <input type="text" placeholder="Enter PAN Number" name="pan" required>
+
+            <label for="bankAccount"><b>Bank Account Number</b></label>
+            <input type="text" placeholder="Enter Bank Account Number" name="bankAccount" required>
+            <label for="bankAccount"><b>Account Balance</b></label>
+            <input type="text" placeholder="Enter Bank Account Balance" name="bankAccountBal" required>
+
+            <label for="age"><b>Age</b></label>
+            <input type="number" placeholder="Enter Age" name="age" required>
+
+            <label for="email"><b>Email</b></label>
+            <input type="email" placeholder="Enter Email" name="email" required>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+
+            <button type="submit" class="registerbtn">Register</button>
+        </form>
+    </div>
+</body>
+<script>
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Collect form data
+        var formData = {
+            name: document.getElementsByName('name')[0].value,
+            panNumber: parseInt(document.getElementsByName('pan')[0].value),
+            accountNumber: document.getElementsByName('bankAccount')[0].value,
+            age: document.getElementsByName('age')[0].value,
+            email: document.getElementsByName('email')[0].value,
+            pensionAmount: document.getElementsByName('bankAccountBal')[0].value,
+            password: document.getElementsByName('psw')[0].value
+        };
+        fetch('http://localhost:3000/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    if (response.status === 400) {
+                        // Email already in use
+                        alert('Email already in use');
+                        window.location.href = '/User Module/UserHomePage.html';
+                    } else {
+                        // Other server errors
+                        throw new Error('Failed to create user');
+                    }
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                // Redirect to home page
+                window.location.href = '/User Module/UserLoginPage.html';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                // alert(error.message); // Display alert with the error message
+            });
+
+    });
+</script>
+
+</html>
